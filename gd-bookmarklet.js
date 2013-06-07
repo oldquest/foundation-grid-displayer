@@ -4,17 +4,17 @@ if (typeof jQuery === "undefined") {
 } else {
   // Close grid displayer
   var removeGridDisplayer = function() {  
-    $("#grid-displayer-tools").remove();
-    $("#grid-displayer").remove();
+    jQuery("#grid-displayer-tools").remove();
+    jQuery("#grid-displayer").remove();
   },
   
   // Build grid displayer
   gdIsBuilt = false,
   buildGridDisplayer = function(gridFramework) {
   
-    var $gdContainer = $("#grid-displayer .gd-container"),
-    $gdRow           = $("#grid-displayer .gd-row"),
-    $gdTools         = $("#grid-displayer-tools"),
+    var $gdContainer = jQuery("#grid-displayer .gd-container"),
+    $gdRow           = jQuery("#grid-displayer .gd-row"),
+    $gdTools         = jQuery("#grid-displayer-tools"),
     colsHtml         = "",
     gridNbcols       = parseInt($gdTools.find("#gdt-nbcols").val());
     
@@ -65,47 +65,47 @@ if (typeof jQuery === "undefined") {
       $gdTools.find("#gdt-options").css("display", "block"); // as the CSS is loaded after the JS, show() is overwritten by display: none
       $gdTools.find("#gdt-ok").css("display", "block");
       setGridZindex($gdTools.find("#gdt-zindex").val());
-      $("#grid-displayer").show();
+      jQuery("#grid-displayer").show();
       gdIsBuilt = true;
     }
   },
   
   // Setters
   setGridColor = function(gridColor, hasBorder) {  
-    $("#grid-displayer .gd-column:not(.dontshow)").css("background-color", gridColor);
+    jQuery("#grid-displayer .gd-column:not(.dontshow)").css("background-color", gridColor);
     if (hasBorder) {
       setBorderStyle();
     }
   },
   setGridOpacity = function(gridOpacity, hasBorder) {  
-    $("#grid-displayer .gd-column:not(.dontshow)").css("opacity", gridOpacity);
+    jQuery("#grid-displayer .gd-column:not(.dontshow)").css("opacity", gridOpacity);
     if (hasBorder) {
       setBorderStyle();
     }
   },
   setGridZindex = function(gridZindex) {  
-    $("#grid-displayer").css("z-index", gridZindex);
+    jQuery("#grid-displayer").css("z-index", gridZindex);
   },
   setBorderStyle = function() { // for Foundation 3 only. If only border-opacity existed...
-    var currentOpacity = $("#grid-displayer .gd-column:first-child").css("opacity"),
-        rgbaColor = $("#grid-displayer .gd-column:first-child").css("background-color").replace('rgb', 'rgba').replace(')',', ' + currentOpacity + ')'); // I'm not proud of this. If you have a nicer solution, your pull request is very welcome.
-    $("#grid-displayer .gd-row").css("border-right", "2px solid " + rgbaColor);
+    var currentOpacity = jQuery("#grid-displayer .gd-column:first-child").css("opacity"),
+        rgbaColor = jQuery("#grid-displayer .gd-column:first-child").css("background-color").replace('rgb', 'rgba').replace(')',', ' + currentOpacity + ')'); // I'm not proud of this. If you have a nicer solution, your pull request is very welcome.
+    jQuery("#grid-displayer .gd-row").css("border-right", "2px solid " + rgbaColor);
   };
   
-  if ($("#grid-displayer").length) { // Close grid displayer when the bookmarklet is clicked for a second time
+  if (jQuery("#grid-displayer").length) { // Close grid displayer when the bookmarklet is clicked for a second time
     removeGridDisplayer();    
   } else {
   
     // Default parameters
-    var dataGridFramework = $("body").data("grid-framework"),
-    dataGridNbcols        = $("body").data("grid-nbcols"),
-    dataGridColor         = $("body").data("grid-color"),
-    dataGridOpacity       = $("body").data("grid-opacity"),
-    dataGridZindex        = $("body").data("grid-zindex"),
+    var dataGridFramework = jQuery("body").data("grid-framework"),
+    dataGridNbcols        = jQuery("body").data("grid-nbcols"),
+    dataGridColor         = jQuery("body").data("grid-color"),
+    dataGridOpacity       = jQuery("body").data("grid-opacity"),
+    dataGridZindex        = jQuery("body").data("grid-zindex"),
     
     gdFramework           = (typeof dataGridFramework === "undefined") ? "" : dataGridFramework,
     gdNbcols              = (typeof dataGridNbcols === "undefined") ?    "12" : dataGridNbcols,
-    gdColor               = (typeof dataGridColor === "undefined") ?     "black" : dataGridColor,
+    gdColor               = (typeof dataGridColor === "undefined") ?     "red" : dataGridColor,
     gdOpacity             = (typeof dataGridOpacity === "undefined") ?   "0.3" : dataGridOpacity,
     gdZindex              = (typeof dataGridZindex === "undefined") ?    "0" : dataGridZindex;
     
@@ -118,7 +118,7 @@ if (typeof jQuery === "undefined") {
     gridToolsHtml = "<div id=\"grid-displayer-tools\">";
     gridToolsHtml += "  <div class=\"gdt-field\"><select id=\"gdt-framework\">";
     gridToolsHtml += "    <option>&darr; Choose your framework</option>";
-    $.each(frameworks, function(key, value) {     
+    jQuery.each(frameworks, function(key, value) {     
       gridToolsHtml += "<option value=\"" + key + "\"";
       gridToolsHtml += (key == gdFramework) ? " selected" : "";
       gridToolsHtml += ">" + value + "</option>";
@@ -135,40 +135,40 @@ if (typeof jQuery === "undefined") {
     gridToolsHtml += "  <div class=\"gdt-button\"><a href=\"#\" id=\"gdt-close\">Close</a></div>";
     gridToolsHtml += "</div>";
     
-    $("head").append("<link rel='stylesheet' type='text/css' href='http://alefeuvre.github.com/foundation-grid-displayer/stylesheets/gd-bookmarklet.min.css'>");
-    $("body").prepend(gridHtml).prepend(gridToolsHtml);  
-    $("#grid-displayer-tools").delay(1200).fadeTo("slow",0.1); 
+    jQuery("head").append("<link rel='stylesheet' type='text/css' href='http://alefeuvre.github.com/foundation-grid-displayer/stylesheets/gd-bookmarklet.min.css'>");
+    jQuery("body").prepend(gridHtml).prepend(gridToolsHtml);  
+    jQuery("#grid-displayer-tools").delay(1200).fadeTo("slow",0.1); 
     
     if (typeof dataGridFramework !== "undefined") {
       buildGridDisplayer(gdFramework);
     }
     
     // Actions
-    $("#grid-displayer-tools #gdt-framework").change(function() {
-      if ($(this).val() == "tired") {
+    jQuery("#grid-displayer-tools #gdt-framework").change(function() {
+      if (jQuery(this).val() == "tired") {
         window.open("http://snipt.net/jiraisurfer/custom-parameters-for-foundation-grid-displayer/");
       } else {
-        gdFramework = $(this).val();
+        gdFramework = jQuery(this).val();
         if (gdFramework == "f3" || gdFramework == "f2") {
-          $("#grid-displayer-tools #gdt-nbcols").val(12);
+          jQuery("#grid-displayer-tools #gdt-nbcols").val(12);
         }
         buildGridDisplayer(gdFramework);
       }
     });    
-    $("#grid-displayer-tools #gdt-nbcols").change(function() {
+    jQuery("#grid-displayer-tools #gdt-nbcols").change(function() {
       buildGridDisplayer(gdFramework);
     });    
-    $("#grid-displayer-tools #gdt-color").change(function() {
-      setGridColor($(this).val(), gdFramework == "f3");
+    jQuery("#grid-displayer-tools #gdt-color").change(function() {
+      setGridColor(jQuery(this).val(), gdFramework == "f3");
     });    
-    $("#grid-displayer-tools #gdt-opacity").change(function() {
-      setGridOpacity($(this).val(), gdFramework == "f3");
+    jQuery("#grid-displayer-tools #gdt-opacity").change(function() {
+      setGridOpacity(jQuery(this).val(), gdFramework == "f3");
     });    
-    $("#grid-displayer-tools #gdt-zindex").change(function() {
-      setGridZindex($(this).val());
+    jQuery("#grid-displayer-tools #gdt-zindex").change(function() {
+      setGridZindex(jQuery(this).val());
     });    
     
-    $("#grid-displayer-tools #gdt-close").click(function() {
+    jQuery("#grid-displayer-tools #gdt-close").click(function() {
       removeGridDisplayer();
     });
   } 
